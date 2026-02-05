@@ -2,19 +2,23 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"  // Change this line
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-// Add the User model:
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String   // Hashed password
+  name         String
+  avatar       String?
+  githubUsername String?
+  expertise    String[] @default([])  // Array of languages/frameworks
+  reputationScore Int   @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
